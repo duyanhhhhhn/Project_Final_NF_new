@@ -1,0 +1,237 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutClient.cshtml";
+}
+@if (ViewBag.data != null)
+{
+    HashSet<Project_Final_NF.Models.ModelViews.ProductView> dt = (HashSet<Project_Final_NF.Models.ModelViews.ProductView>)ViewBag.data;
+    var i = 1;
+    <div id="cart-icon" onclick="toggleCart()">
+        🛒 Cart <span id="cart-count">0</span>
+    </div>
+
+    <div id="cart">
+        <div class="cart-close" onclick="toggleCart()">✖</div>
+        <h3>Your Cart</h3>
+        <div id="cart-items">Cart is empty</div>
+        <div class="cart-total" id="cart-total"></div>
+        <div class="cart-checkout" onclick="checkout()">Checkout</div>
+    </div>
+    <section class="shop_section layout_padding">
+        <div class="container">
+            <div class="heading_container heading_center">
+                <h2>
+                    Latest Products
+                </h2>
+            </div>
+            <div class="row">
+                @foreach (Project_Final_NF.Models.ModelViews.ProductView item in dt)
+                {
+                    <div class="col-sm-6 col-md-4 col-lg-3">
+                        <div class="box">
+                            <a href="">
+                                <div class="img-box">
+                                    <img src="@Url.Content("~/content/client/")images/@item.ImageUrl" alt="">
+                                </div>
+                                <div class="detail-box">
+                                    <h6>
+                                       @item.Name
+                                    </h6>
+                                    <h6>
+                                        Price
+                                        <span>
+                                            @item.Price
+                                        </span>
+                                    </h6>
+                                </div>
+                                <div class="new">
+                                    <span>
+                                        New
+                                    </span>
+                                </div>
+                            </a>
+                            <button onclick="addToCart(`@item.Name`, @item.Price)">Add to Cart</button>
+                        </div>
+                    </div>
+                }
+
+
+            </div>
+            <div class="btn-box">
+                <a href="">
+                    View All Products
+                </a>
+            </div>
+        </div>
+    </section>
+}
+    <script>
+        let cart = [];
+        let cartCount = 0;
+
+        function toggleCart() {
+            document.getElementById('cart').classList.toggle('active');
+        }
+
+        function addToCart(name, price) {
+            cart.push({ name, price });
+            cartCount++;
+            document.getElementById('cart-count').innerText = cartCount;
+            renderCart();
+        }
+
+        function renderCart() {
+            let cartItems = document.getElementById('cart-items');
+            if (cart.length === 0) {
+                cartItems.innerHTML = "Cart is empty";
+                document.getElementById('cart-total').innerText = "";
+                return;
+            }
+
+            let html = "";
+            let total = 0;
+            cart.forEach((item, index) => {
+                html += `
+                <div class="cart-item">
+                    <span>${item.name} - $${item.price}</span>
+                    <button onclick="removeItem(${index})">Remove</button>
+                </div>
+            `;
+                total += item.price;
+            });
+            cartItems.innerHTML = html;
+            document.getElementById('cart-total').innerText = "Total: $" + total;
+        }
+
+        function removeItem(index) {
+            cart.splice(index, 1);
+            cartCount--;
+            document.getElementById('cart-count').innerText = cartCount;
+            renderCart();
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                alert("Your cart is empty!");
+                return;
+            }
+            alert("Checkout successful!");
+            cart = [];
+            cartCount = 0;
+            document.getElementById('cart-count').innerText = cartCount;
+            renderCart();
+        }
+    </script>
+
+
+    <!-- SCRIPT XỬ LÝ GIỎ HÀNG -->
+    <style>
+
+        /* Giỏ hàng nút */
+        #cart-icon {
+            position: fixed;
+            top: 20px;
+            right: 30px;
+            background-color: #ff6f61;
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            z-index: 999;
+        }
+
+            #cart-icon span {
+                background-color: #fff;
+                color: #ff6f61;
+                padding: 4px 8px;
+                border-radius: 50%;
+                margin-left: 8px;
+            }
+
+        /* Giỏ hàng chi tiết */
+        #cart {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 350px;
+            height: 100%;
+            background-color: #fff;
+            box-shadow: -2px 0 10px rgba(0,0,0,0.3);
+            padding: 20px;
+            transition: right 0.3s ease;
+            z-index: 9999;
+        }
+
+            #cart.active {
+                right: 0;
+            }
+
+            #cart h3 {
+                margin-bottom: 20px;
+            }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+            .cart-item button {
+                background-color: #ff6f61;
+                color: white;
+                border: none;
+                padding: 5px 8px;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+
+        .cart-total {
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .cart-checkout {
+            margin-top: 20px;
+            width: 100%;
+            background-color: #28a745;
+            color: white;
+            padding: 12px;
+            text-align: center;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .cart-close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            cursor: pointer;
+            font-size: 20px;
+            color: #333;
+        }
+
+        /* Sản phẩm */
+        .product {
+            border: 1px solid #ddd;
+            padding: 15px;
+            text-align: center;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+            .product img {
+                width: 100%;
+                height: auto;
+            }
+
+            .product button {
+                margin-top: 10px;
+                background-color: #ff6f61;
+                color: white;
+                border: none;
+                padding: 10px 16px;
+                border-radius: 6px;
+                cursor: pointer;
+            }
+    </style>

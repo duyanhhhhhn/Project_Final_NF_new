@@ -1,0 +1,132 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="stats-container">
+    <a href="/admin/account" class="stat-card">
+        <div class="stat-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-pie-chart"><path d="M21.21 15.89A10 10 0 1 1 8 2.83" /><path d="M22 12A10 10 0 0 0 12 2v10z" /></svg>
+
+        </div>
+
+        <div class="stat-content">
+            <div>
+                <span class="stat-label">Account</span>
+            </div>
+        </div>
+    </a>
+
+    <a href="/admin/product" class="stat-card">
+        <div class="stat-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" /><line x1="3" y1="6" x2="21" y2="6" /><path d="M16 10a4 4 0 0 1-8 0" /></svg>
+
+        </div>
+
+        <div class="stat-content">
+            <div>
+                <span class="stat-label">Products</span>
+            </div>
+        </div>
+    </a>
+    <a href="/admin/order" class="stat-card">
+        <div class="stat-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><polyline points="22 12 16 12 14 15 10 15 8 12 2 12" /><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z" /></svg>
+
+        </div>
+
+        <div class="stat-content">
+            <div>
+                <span class="stat-label">Order</span>
+            </div>
+        </div>
+    </a>
+</div>
+<style>
+    .stats-container {
+        width: 100%;
+        display: grid;
+        height: auto;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        margin-top: 20px;
+        align-items: start;
+    }
+
+    .stat-card {
+        border-radius: 16px;
+        border: 1px solid #e5e7eb;
+        background-color: #ffffff;
+        padding: 20px;
+        transition: 0.3s;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        height: auto;
+            text-decoration:none
+    }
+
+        .stat-card:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+    .stat-icon {
+        width: 48px;
+        height: 48px;
+        background-color: #f3f4f6;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .stat-icon-svg {
+        fill: #374151;
+    }
+
+    .stat-content {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+    }
+
+    .stat-label {
+        font-size: 14px;
+        color: #6b7280;
+    }
+
+    .stat-value {
+        margin-top: 8px;
+        font-size: 24px;
+        font-weight: bold;
+        color: #374151;
+    }
+
+    .stat-growth {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        background-color: #d1fae5;
+        color: #059669;
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    .growth-icon {
+        fill: currentColor;
+    }
+
+
+</style>
+<script>
+    const tabs = document.querySelectorAll('.tab-item');
+    tabs.forEach(tab => {
+        tab.addEventListener('click', function (e) {
+            tabs.forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+</script>
