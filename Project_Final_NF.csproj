@@ -131,17 +131,64 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Controllers\ShopController.cs" />
     <Compile Include="Controllers\WhyController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Daos\AccountDAO.cs" />
+    <Compile Include="Models\Daos\AuthorizationDAO.cs" />
+    <Compile Include="Models\Entities\db_order.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>db_order.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\db_order.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>db_order.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\db_order.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>db_order.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\tbl_authentication.cs">
+      <DependentUpon>db_order.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\tbl_authorization.cs">
+      <DependentUpon>db_order.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\tbl_category.cs">
+      <DependentUpon>db_order.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\tbl_member.cs">
+      <DependentUpon>db_order.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\tbl_order.cs">
+      <DependentUpon>db_order.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\tbl_order_detail.cs">
+      <DependentUpon>db_order.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\tbl_order_item.cs">
+      <DependentUpon>db_order.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entities\tbl_product.cs">
+      <DependentUpon>db_order.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ModelViews\AuthenticationView.cs" />
+    <Compile Include="Models\ModelViews\AuthorizationView.cs" />
+    <Compile Include="Models\ModelViews\MemberView.cs" />
     <Compile Include="Models\ModelViews\OrderView.cs" />
     <Compile Include="Models\ModelViews\ProductView.cs" />
     <Compile Include="Models\ModelViews\UserView.cs" />
     <Compile Include="Models\Reponsitories\IRepository.cs" />
+    <Compile Include="Models\Reponsitories\OrderRepository.cs" />
     <Compile Include="Models\Reponsitories\ProductRepository.cs" />
+    <Compile Include="Models\Reponsitories\UserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -190,6 +237,16 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\Entities\db_order.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>db_order.edmx</DependentUpon>
+      <LastGenOutput>db_order.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Entities\db_order.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>db_order.edmx</DependentUpon>
+      <LastGenOutput>db_order.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -202,6 +259,13 @@
     <Content Include="Content\Client\fonts\fontawesome-webfont.woff" />
     <Content Include="Content\Client\fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\Client\fonts\octin_sports_rg.ttf" />
+    <EntityDeploy Include="Models\Entities\db_order.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>db_order.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Entities\db_order.edmx.diagram">
+      <DependentUpon>db_order.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
@@ -239,10 +303,10 @@
     <Content Include="Views\Admin\Order.cshtml" />
     <Content Include="Views\Admin\Product.cshtml" />
     <Content Include="Views\Admin\Add_product.cshtml" />
+    <Content Include="Views\Member\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\Entities\" />
     <Folder Include="Models\Util\" />
   </ItemGroup>
   <ItemGroup>

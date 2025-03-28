@@ -23,22 +23,23 @@ namespace Project_Final_NF.Models.ModelViews
         public int CategoryId { get; set; } = 0;
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;
-        public static ProductView ToCategoryView(product item)
+        public static ProductView ToCategoryView(tbl_product item)
         {
             return new ProductView
             {
                 ProductId = item.product_id,
                 Name = item.name,
-                StockQuantity = (int)item.stock_quantity,
-                Price = item.price,
-                ImageUrl=  item.image_url,
+                StockQuantity = item.stock_quantity ?? 0,
+                Price = item.price ,
+                ImageUrl = item.image_url,
                 Description = item.description,
-                CategoryId = (int)item.category_id
+                CategoryId = item.category_id ?? 1 
             };
         }
-        public static product ToProduct(ProductView item)
+
+        public static tbl_product ToProduct(ProductView item)
         {
-            return new product
+            return new tbl_product
             {
              product_id = item.ProductId,
              name = item.Name,

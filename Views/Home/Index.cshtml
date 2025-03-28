@@ -14,6 +14,10 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <link rel="shortcut icon" href="@Url.Content("~/content/client/")images/favicon.png" type="image/x-icon">
+    @Scripts.Render("~/bundles/modernizr")
+    @{
+        Project_Final_NF.Models.ModelViews.MemberView item = (Project_Final_NF.Models.ModelViews.MemberView)Session["acc"];
+    }
 
     <title>
         Giftos
@@ -69,13 +73,18 @@
                         </li>
                     </ul>
                     <div class="user_option">
-                        <a href="/login">
-                            <i class="fa fa-user" aria-hidden="true"></i>
-                            <span>
-                                Login
-                            </span>
-                        </a>
-
+                        @if (item != null)
+                        {
+                            <span>👋 Xin chào, @item.UserName </span>
+                            <a href="@Url.Action("Logout", "Login")">Đăng xuất</a>
+                        }
+                        else
+                        {
+                            <a href="/login">
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                                <span>Login</span>
+                            </a>
+                        }
                     </div>
                 </div>
             </nav>

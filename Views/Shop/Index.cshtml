@@ -39,9 +39,9 @@
                                     </h6>
                                     <h6>
                                         Price
-                                        <span>
-                                            @item.Price
-                                        </span>
+                                            <span>
+                                                ???
+                                            </span>
                                     </h6>
                                 </div>
                                 <div class="new">
@@ -50,18 +50,14 @@
                                     </span>
                                 </div>
                             </a>
-                            <button onclick="addToCart(`@item.Name`, @item.Price)">Add to Cart</button>
+                            <button onclick="addToCart(`@item.Name`, `???`)">Add to Cart</button>
                         </div>
                     </div>
                 }
 
 
             </div>
-            <div class="btn-box">
-                <a href="">
-                    View All Products
-                </a>
-            </div>
+            
         </div>
     </section>
 }
@@ -100,7 +96,7 @@
                 total += item.price;
             });
             cartItems.innerHTML = html;
-            document.getElementById('cart-total').innerText = "Total: $" + total;
+            document.getElementById('cart-total').innerText = "Total:  ????$" ;
         }
 
         function removeItem(index) {

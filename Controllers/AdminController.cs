@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity.Core;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -20,10 +21,19 @@ namespace Project_Final_NF.Controllers
         }
         public ActionResult Account()
         {
+            HashSet<OrderView> list = new HashSet<OrderView>();
+            var q = OrderRepository.Instance.All();
+            list = q ?? new HashSet<OrderView>();
+            ViewBag.data = list;
             return View();
+
         }
         public ActionResult Order()
         {
+            HashSet<OrderView> list = new HashSet<OrderView>();
+            var q = OrderRepository.Instance.All();
+            list = q ?? new HashSet<OrderView>();
+            ViewBag.data = list;
             return View();
         }
         public ActionResult Product()
@@ -36,34 +46,47 @@ namespace Project_Final_NF.Controllers
         }
         public ActionResult Add_product()
         {
-            return View();
+            var q = ProductRepository.Instance.All();
+            return View(q);
 
         }
         [HttpPost]
-        public ActionResult Add_product(HttpPostedFileBase fuImage, ProductView model)
+        public ActionResult Add_product(HttpPostedFileBase ImageUrl, ProductView model)
         {
             try
             {
-                if (fuImage != null)
+                string directoryPath = Server.MapPath("~/Content/client/images");
+                if (!Directory.Exists(directoryPath))
                 {
-                    string newFileName = $"{DateTime.Now.Ticks.ToString()} {fuImage.FileName}";
-                    string fullPathSave = $"{Server.MapPath(Url.Content("~/content/images"))}\\{newFileName}";
-                    fuImage.SaveAs(fullPathSave);
-                    model.ImageUrl = newFileName;
+                    Directory.CreateDirectory(directoryPath);
                 }
 
-                model.Name = Request.Form["Name"];
-                model.Description = Request.Form["Description"];
-                model.StockQuantity = int.Parse(Request.Form["StockQuantity"]);
+                if (ImageUrl != null && ImageUrl.ContentLength > 0)
+                {
+                    string safeFileName = Path.GetFileNameWithoutExtension(ImageUrl.FileName)
+                                            .Replace(" ", "_")
+                                            + Path.GetExtension(ImageUrl.FileName);
+                    string newFileName = $"{DateTime.Now.Ticks}_{safeFileName}";
+                    string fullPathSave = Path.Combine(directoryPath, newFileName);
+
+                    ImageUrl.SaveAs(fullPathSave);
+                    model.ImageUrl = newFileName;
+                }
+                else
+                {
+                    model.ImageUrl = "defaultimage.jpg";
+                }
+
                 ProductRepository.Instance.Create(model);
             }
-            catch (EntityException ex)
+            catch (Exception ex)
             {
-
                 Debug.Write(ex.Message);
+                System.IO.File.WriteAllText(Server.MapPath("~/Content/log.txt"), ex.ToString());
             }
-
             return RedirectToAction("/product");
         }
+
+       
     }
 }

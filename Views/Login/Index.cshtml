@@ -7,15 +7,13 @@
         <div class="login-container">
             <div class="circle circle-one"></div>
             <div class="form-container">
-                <img src="https://raw.githubusercontent.com/hicodersofficial/glassmorphism-login-form/master/assets/illustration.png" alt="illustration" class="illustration" />
                 <h1 class="opacity">LOGIN</h1>
-                <form>
-                    <input type="text" placeholder="USERNAME" />
-                    <input type="password" placeholder="PASSWORD" />
-                    <button class="opacity">SUBMIT</button>
+                <form action="@Url.Action("acc_checked")" method="post">
+                    <input type="text" placeholder="USERNAME" name="Username" id="Username" value=""/>
+                    <input type="password" placeholder="PASSWORD" name="Password" id="Password" value=""/>
+                    <button class="opacity" type="submit" value="Login" id="btnLogin" name="btnLogin">SUBMIT</button>
                 </form>
                 <div class="register-forget opacity">
-                    <a href="/register">REGISTER</a>
                     <a href="/">Back</a>
                 </div>
             </div>

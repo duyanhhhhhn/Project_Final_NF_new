@@ -25,7 +25,7 @@ namespace Project_Final_NF.Models.Reponsitories
             try
             {
                 using (var en = new db_orderEntities())
-                    return en.products.ToList().Select(ProductView.ToCategoryView).ToHashSet();
+                    return en.tbl_product.ToList().Select(ProductView.ToCategoryView).ToHashSet();
             }
             catch (EntityException ex)
             {
@@ -40,7 +40,7 @@ namespace Project_Final_NF.Models.Reponsitories
             {
                 using (var db = new db_orderEntities())
                 {
-                    var item = new product
+                    tbl_product item = new tbl_product
                     {
                         product_id = entity.ProductId,
                         name = entity.Name,
@@ -50,7 +50,7 @@ namespace Project_Final_NF.Models.Reponsitories
                         category_id = entity.CategoryId
                     };
 
-                    db.products.Add(item);
+                    db.tbl_product.Add(item);
                     db.SaveChanges();
                 }
             }
