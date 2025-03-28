@@ -4,15 +4,15 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="a5345e06ce1c401180aefc3deed82b40" Name="Diagram1">
-        <EntityTypeShape EntityType="db_orderModel.tbl_authentication" Width="1.5" PointX="1.5" PointY="11.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="db_orderModel.tbl_authorization" Width="1.5" PointX="3.75" PointY="11.75" IsExpanded="true" />
+      <Diagram DiagramId="58b4fb9ba51b442d9b66a1b4dbe82f62" Name="Diagram1">
+        <EntityTypeShape EntityType="db_orderModel.tbl_authentication" Width="1.5" PointX="1.5" PointY="12" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_orderModel.tbl_authorization" Width="1.5" PointX="3.75" PointY="11.875" IsExpanded="true" />
         <EntityTypeShape EntityType="db_orderModel.tbl_category" Width="1.5" PointX="0.75" PointY="3" IsExpanded="true" />
-        <EntityTypeShape EntityType="db_orderModel.tbl_member" Width="1.5" PointX="0.75" PointY="7.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="db_orderModel.tbl_order" Width="1.5" PointX="3" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_orderModel.tbl_member" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_orderModel.tbl_order" Width="1.5" PointX="3" PointY="7.625" IsExpanded="true" />
         <EntityTypeShape EntityType="db_orderModel.tbl_order_detail" Width="1.5" PointX="5.25" PointY="2.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="db_orderModel.tbl_order_item" Width="1.5" PointX="8.25" PointY="2.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="db_orderModel.tbl_product" Width="1.5" PointX="3" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_orderModel.tbl_order_item" Width="1.5" PointX="8.25" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_orderModel.tbl_product" Width="1.5" PointX="3" PointY="2.375" IsExpanded="true" />
         <AssociationConnector Association="db_orderModel.FK__tbl_autho__id_au__4AB81AF0" ManuallyRouted="false" />
         <AssociationConnector Association="db_orderModel.FK__tbl_membe__id_au__4BAC3F29" ManuallyRouted="false" />
         <AssociationConnector Association="db_orderModel.FK__tbl_produ__categ__4F7CD00D" ManuallyRouted="false" />

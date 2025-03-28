@@ -35,10 +35,49 @@ namespace Project_Final_NF.Models.Reponsitories
             return new HashSet<OrderView>();
         }
 
-        public void Create(OrderView entity)
+        public int Create(OrderView entity, List<OrderDetailView> orderItems)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (var en = new db_orderEntities())
+                {
+                    var order = new tbl_order
+                    {
+                        user_id = entity.UserId,
+                        total_amount = orderItems.Sum(item => item.Price * item.Quantity),
+                        status = "Pending", 
+                        created_at = DateTime.Now,
+                        confirmed_by = null
+                    };
+
+                    en.tbl_order.Add(order);
+                    en.SaveChanges();
+
+                    foreach (var item in orderItems)
+                    {
+                        var orderItem = new tbl_order_item
+                        {
+                            order_id = order.order_id,
+                            product_id = item.ProductId,
+                            quantity = item.Quantity,
+                            price = 0
+                        };
+
+                        en.tbl_order_item.Add(orderItem);
+                    }
+
+                    en.SaveChanges();
+
+                    return order.order_id; 
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+                return 0;
+            }
         }
+
 
         public int Delete(OrderView entity)
         {
@@ -50,9 +89,24 @@ namespace Project_Final_NF.Models.Reponsitories
             throw new NotImplementedException();
         }
 
-        public UserView findById(int id)
+        public HashSet<OrderView> FindByUserId(int userId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (var en = new db_orderEntities())
+                {
+                    return en.tbl_order
+                             .Where(o => o.user_id == userId)
+                             .ToList()
+                             .Select(OrderView.ToOrderView)
+                             .ToHashSet();
+                }
+            }
+            catch (EntityException ex)
+            {
+                Debug.WriteLine(ex);
+            }
+            return new HashSet<OrderView>();
         }
 
         public HashSet<OrderView> FindByKeyword(string keyword)
@@ -60,7 +114,60 @@ namespace Project_Final_NF.Models.Reponsitories
             throw new NotImplementedException();
         }
 
+        public int Update(int orderDetailId, decimal newPrice)
+        {
+            try
+            {
+                using (var en = new db_orderEntities())
+                {
+                    var orderDetail = en.tbl_order_detail.FirstOrDefault(od => od.order_detail_id == orderDetailId);
+                    if (orderDetail == null) return 0;
+
+                    orderDetail.price = newPrice;
+
+                    return en.SaveChanges();
+                }
+            }
+            catch (EntityException ex)
+            {
+                Debug.WriteLine(ex);
+            }
+            return 0;
+        }
+        public int UpdateStatus(int orderDetailId, string newStatus)
+        {
+            try
+            {
+                using (var en = new db_orderEntities())
+                {
+                    var orderDetail = en.tbl_order_detail.FirstOrDefault(o => o.order_detail_id == orderDetailId);
+                    if (orderDetail != null)
+                    {
+                        orderDetail.status = newStatus;
+                        return en.SaveChanges();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+            return 0;
+        }
+
+
+
+        public UserView findById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public int Update(OrderView entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Create(OrderView entity)
         {
             throw new NotImplementedException();
         }

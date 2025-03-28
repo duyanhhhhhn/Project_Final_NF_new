@@ -1,0 +1,183 @@
+﻿@{
+    ViewBag.Title = "My Orders";
+    Layout = "~/Views/Shared/_LayoutClient.cshtml";
+}
+
+@if (ViewBag.data != null)
+{
+    HashSet<Project_Final_NF.Models.ModelViews.OrderView> dt = (HashSet<Project_Final_NF.Models.ModelViews.OrderView>)ViewBag.data;
+    <div class="order-content">
+        <div class="order-header">
+            <h1 class="order-title">My Orders</h1>
+        </div>
+
+        <div class="order-table-wrapper">
+            <!-- Table Header -->
+            <div class="order-table-header">
+                <div class="order-cell">Order ID</div>
+                <div class="order-cell">User Name</div>
+                <div class="order-cell">Product Name</div>
+                <div class="order-cell">Quantity</div>
+                <div class="order-cell">Price</div>
+                <div class="order-cell">Order Date</div>
+                <div class="order-cell order-status-cell">Status</div>
+            </div>
+
+            <!-- Order List -->
+            @foreach (var item in dt)
+            {
+                foreach (var order in item.OrderDetails)
+                {
+                    <div class="order-row">
+                        <div class="order-cell">@item.OrderId</div>
+                        <div class="order-cell">@item.UserName</div>
+                        <div class="order-cell">@order.ProductName</div>
+                        <div class="order-cell">@order.Quantity</div>
+                        <div class="order-cell">
+                            @(item.TotalAmount == 0 ? "???" : order.Price.ToString("C"))
+                        </div>
+                        <div class="order-cell">@item.CreateAt.ToString("dd/MM/yyyy")</div>
+                        <div class="order-cell order-status-cell">
+                            @if (order.status == "Confirmed")
+                            {
+                                <select id="status_@order.OrderDetailId">
+                                    <option value="Confirmed" @(order.status == "Confirmed" ? "selected" : "")>Confirmed</option>
+                                    <option value="Cancelled" @(order.status == "Cancelled" ? "selected" : "")>Cancelled</option>
+                                </select>
+                            }
+                            else
+                            {
+                                <span class="order-status-cell">
+                                    @order.status
+                                </span>
+                            }
+                            <div class="product-cell status-cell">
+
+                            </div>
+
+                            <!-- Nút cập nhật -->
+                            @if (order.status == "Confirmed")
+                            {
+                              <div class="order-cell">
+                                  <button onclick="updateOrderStatus(@order.OrderDetailId)">Cập nhật trạng thái</button>
+                              </div>
+                            }
+                            
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+}
+else
+{
+    <p>No orders found.</p>
+}
+
+<style>
+    .order-content {
+        padding: 20px;
+    }
+
+    .order-header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .order-title {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .order-table-wrapper {
+        background: #fff;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .order-table-header, .order-row {
+        display: flex;
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+        align-items: center;
+    }
+
+    .order-cell {
+        flex: 1;
+        text-align: center;
+        padding: 8px;
+    }
+
+    .order-status-cell .order-status {
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-weight: bold;
+    }
+
+    .order-status.order-completed {
+        background: #28a745;
+        color: white;
+    }
+
+    .order-status.order-pending {
+        background: #ffc107;
+        color: black;
+    }
+</style>
+
+<script>
+  function updateOrderDetail(orderDetailId) {
+    var newPrice = document.getElementById("price_" + orderDetailId).value;
+
+    fetch('@Url.Action("UpdateOrderDetail", "Admin")', {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-Requested-With": "XMLHttpRequest"
+        },
+        body: JSON.stringify({
+            orderDetailId: orderDetailId,
+            newPrice: parseFloat(newPrice)
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert("Cập nhật thành công!");
+            location.reload();
+        } else {
+            alert("Cập nhật thất bại!");
+        }
+    })
+    .catch(error => console.error("Lỗi:", error));
+}
+    function updateOrderStatus(orderDetailId) {
+        var newStatus = document.getElementById("status_" + orderDetailId).value;
+
+    fetch('@Url.Action("UpdateOrderStatus", "Admin")', {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-Requested-With": "XMLHttpRequest"
+        },
+        body: JSON.stringify({
+            orderDetailId: orderDetailId,
+            newStatus: newStatus
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert("Cập nhật trạng thái thành công!");
+            location.reload();
+        } else {
+            alert("Cập nhật trạng thái thất bại!");
+        }
+    })
+    .catch(error => console.error("Lỗi:", error));
+}
+
+
+</script>

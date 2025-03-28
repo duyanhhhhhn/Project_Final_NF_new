@@ -61,6 +61,7 @@
           <Property Name="product_id" Type="int" />
           <Property Name="quantity" Type="int" />
           <Property Name="price" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="status" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="tbl_order_item">
           <Key>
@@ -301,6 +302,7 @@
           <Property Name="product_id" Type="Int32" />
           <Property Name="quantity" Type="Int32" />
           <Property Name="price" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="tbl_order" Relationship="Self.FK__tbl_order__order__534D60F1" FromRole="tbl_order_detail" ToRole="tbl_order" />
           <NavigationProperty Name="tbl_product" Relationship="Self.FK__tbl_order__produ__5441852A" FromRole="tbl_order_detail" ToRole="tbl_product" />
         </EntityType>
@@ -544,6 +546,7 @@
                 <ScalarProperty Name="product_id" ColumnName="product_id" />
                 <ScalarProperty Name="quantity" ColumnName="quantity" />
                 <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="status" ColumnName="status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

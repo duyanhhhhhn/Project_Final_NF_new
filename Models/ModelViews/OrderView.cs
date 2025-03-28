@@ -11,15 +11,20 @@ namespace Project_Final_NF.Models.ModelViews
         public int Quantity { get; set; }
         public decimal Price { get; set; }
         public string ProductName { get; set; }
+        public int OrderDetailId { get; set; }
+        public string status { get; set; }
+
 
         public static OrderDetailView ToOrderDetailView(tbl_order_detail detail)
         {
             return new OrderDetailView
             {
+                OrderDetailId = detail.order_detail_id,
                 ProductId = (int)detail.product_id,
                 Quantity = (int)detail.quantity,
                 ProductName = detail.tbl_product?.name ?? "Unknown",
-                Price = (int)detail.price
+                Price = (int)detail.price,
+                status = detail.status
             };
         }
     }

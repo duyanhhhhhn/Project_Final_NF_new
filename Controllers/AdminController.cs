@@ -87,6 +87,17 @@ namespace Project_Final_NF.Controllers
             return RedirectToAction("/product");
         }
 
-       
+        [HttpPost]
+        public JsonResult UpdateOrderDetail(int orderDetailId, decimal newPrice)
+        {
+            int result = OrderRepository.Instance.Update(orderDetailId, newPrice);
+            return Json(new { success = result > 0 });
+        }
+        [HttpPost]
+        public JsonResult UpdateOrderStatus(int orderDetailId, string newStatus)
+        {
+            int result = OrderRepository.Instance.UpdateStatus(orderDetailId, newStatus);
+            return Json(new { success = result > 0 });
+        }
     }
 }

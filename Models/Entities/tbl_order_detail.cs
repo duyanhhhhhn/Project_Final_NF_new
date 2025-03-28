@@ -19,6 +19,7 @@ namespace Project_Final_NF.Models.Entities
         public Nullable<int> product_id { get; set; }
         public Nullable<int> quantity { get; set; }
         public Nullable<decimal> price { get; set; }
+        public string status { get; set; }
     
         public virtual tbl_order tbl_order { get; set; }
         public virtual tbl_product tbl_product { get; set; }
