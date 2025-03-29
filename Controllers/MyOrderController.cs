@@ -26,5 +26,10 @@ namespace Project_Final_NF.Controllers
             ViewBag.data = orders ?? new HashSet<OrderView>();
             return View();
         }
+        public JsonResult UpdateOrderStatus(int orderDetailId, string newStatus)
+        {
+            int result = OrderRepository.Instance.UpdateStatus(orderDetailId, newStatus);
+            return Json(new { success = result > 0 });
+        }
     }
 }

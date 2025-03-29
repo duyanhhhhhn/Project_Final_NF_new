@@ -55,15 +55,16 @@ namespace Project_Final_NF.Models.Reponsitories
 
                     foreach (var item in orderItems)
                     {
-                        var orderItem = new tbl_order_item
+                        var orderItem = new tbl_order_detail
                         {
                             order_id = order.order_id,
                             product_id = item.ProductId,
-                            quantity = item.Quantity,
-                            price = 0
+                            quantity = 1,
+                            price = 0,
+                            status = "Pending"
                         };
 
-                        en.tbl_order_item.Add(orderItem);
+                        en.tbl_order_detail.Add(orderItem);
                     }
 
                     en.SaveChanges();

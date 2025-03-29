@@ -40,9 +40,9 @@
                             </div>
                             <div class="detail-box">
                                 <h6>@item.Name</h6>
-                                <h6>Price: <span>@item.Price.ToString("C")</span></h6>
+                                <h6>Price: <span>@(item.Price == 0 ? "???" : item.Price.ToString("C"))</span></h6>
                             </div>
-                            <button onclick="addToCart('@item.ProductId', '@item.Name', @item.Price)">Add to Cart</button>
+                            <button onclick="addToCart('@item.ProductId', '@item.Name', @item.Price )">Add to Cart</button>
                         </div>
                     </div>
                 }
@@ -60,17 +60,21 @@
         document.getElementById("cart").classList.toggle("active");
     }
 
-    function addToCart(productId, name, price) {
+    function addToCart(productId, name, price, fixedQuantity = 0) {
         let existingItem = cart.find(item => item.productId === productId);
 
         if (existingItem) {
-            existingItem.quantity += 1;
+            if (fixedQuantity === 1) {
+                alert("This product can only be added once!");
+                return; 
+            } 
         } else {
-            cart.push({ productId, name, price, quantity: 1 });
+            cart.push({ productId, name, price, quantity: fixedQuantity === 1 ? 1 : 1 });
         }
 
         updateCartUI();
     }
+
 
     function updateCartUI() {
         let cartItemsContainer = document.getElementById("cart-items");
@@ -86,13 +90,13 @@
             cartItemsContainer.innerHTML += `
                 <div class="cart-item">
                     <span>${item.name} (x${item.quantity})</span>
-                    <span>${(item.price * item.quantity).toFixed(2)}</span>
+                    <span>???</span>
                     <button onclick="removeFromCart('${item.productId}')">❌</button>
                 </div>
             `;
         });
 
-        cartTotal.innerText = `Total: $${total.toFixed(2)}`;
+        cartTotal.innerText = `Total: ????$`;
         cartCount.innerText = cart.length;
     }
 

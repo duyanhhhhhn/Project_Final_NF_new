@@ -22,31 +22,55 @@ namespace Project_Final_NF.Controllers
 
 
     [HttpPost]
-        public ActionResult PlaceOrder(List<OrderDetailView> orderItems)
+        public JsonResult PlaceOrder(List<ProductView> cart)
         {
-            var user = Session["acc"] as MemberView; 
-            if (user == null)
+            if (cart == null || cart.Count == 0)
             {
-                return RedirectToAction("Index", "Login");
+                return Json(new { success = false, message = "Cart is empty!" });
             }
 
-            var order = new OrderView
+            try
             {
-                UserId = user.Id,
-            };
+                var userSession = Session["acc"] as Project_Final_NF.Models.ModelViews.MemberView;
+                if (userSession == null)
+                {
+                    return Json(new { success = false, message = "User is not logged in!", redirectUrl = Url.Action("Index", "Login") });
+                }
 
-            int orderId = OrderRepository.Instance.Create(order, orderItems);
+                int userId = userSession.Id;
 
-            if (orderId > 0)
-            {
-                ViewBag.Message = "Đặt hàng thành công!";
+                var orderItems = cart.Select(p => new OrderDetailView
+                {
+                    ProductId = p.ProductId,
+                    Quantity = 1,
+                    Price = 0,
+                    status = "Pending",
+                }).ToList();
+
+                var orderView = new OrderView
+                {
+                    UserId = userId
+                };
+
+                int orderId = OrderRepository.Instance.Create(orderView, orderItems);
+
+                if (orderId > 0)
+                {
+                    return Json(new { success = true, message = "Order placed successfully!", orderId });
+                }
+                else
+                {
+                    return Json(new { success = false, message = "Failed to place order!" });
+                }
             }
-            else
+            catch (Exception ex)
             {
-                ViewBag.Message = "Đặt hàng thất bại!";
+                return Json(new { success = false, message = ex.Message });
             }
-
-            return RedirectToAction("Index");
         }
+
+
+
+
     }
 }
